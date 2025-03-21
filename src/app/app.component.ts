@@ -17,8 +17,6 @@ export class AppComponent {
 
   stopRecording() {
     this.state.speechRecognition.stop();
-    if (this.state.speechRecognition.text()) {
-      this._bottomSheet.open(ActionBottomSheetComponent);
-    }
+    this._bottomSheet.open(ActionBottomSheetComponent);
   }
 }

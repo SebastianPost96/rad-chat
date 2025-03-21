@@ -1,9 +1,12 @@
 import { signal } from '@angular/core';
 
 export class ContinuousSpeechRecognition {
-  public text = signal('');
-  public isRecording = signal(false);
+  private _text = signal('');
+  private _isRecording = signal(false);
   private _recognition: SpeechRecognition;
+
+  public text = this._text.asReadonly();
+  public isRecording = this._isRecording.asReadonly();
 
   constructor() {
     this._recognition = new webkitSpeechRecognition();
@@ -11,23 +14,23 @@ export class ContinuousSpeechRecognition {
 
     this._recognition.onresult = (evt) => {
       const result = evt.results[0][0].transcript;
-      this.text.update((text) => (text ? `${text}. ${result}` : result));
+      this._text.update((text) => (text ? `${text}. ${result}` : result));
     };
     this._recognition.onend = () => {
-      if (this.isRecording()) {
+      if (this._isRecording()) {
         this._recognition.start();
       }
     };
   }
 
   public start() {
-    this.text.set('');
-    this.isRecording.set(true);
+    this._text.set('');
+    this._isRecording.set(true);
     this._recognition.start();
   }
 
   public stop() {
-    this.isRecording.set(false);
+    this._isRecording.set(false);
     this._recognition.stop();
   }
 }
