@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  .main-button {
+    color: var(--red50);
+    --size: 50px;
+    width: var(--size);
+    height: var(--size);
+    font-size: var(--size);
+  }
+}
