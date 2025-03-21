@@ -99,6 +99,12 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "buildTarget": "rad-chat:build:production"
+          }
         }
       }
     }
