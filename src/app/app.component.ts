@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AppStateService } from './app.state.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -20,11 +15,10 @@ export class AppComponent {
   protected state = inject(AppStateService);
   private _bottomSheet = inject(MatBottomSheet);
 
-  constructor() {
-    effect(() => {
-      if (!this.state.isRecording() && this.state.text()) {
-        this._bottomSheet.open(ActionBottomSheetComponent);
-      }
-    });
+  stopRecording() {
+    this.state.speechRecognition.stop();
+    if (this.state.speechRecognition.text()) {
+      this._bottomSheet.open(ActionBottomSheetComponent);
+    }
   }
 }

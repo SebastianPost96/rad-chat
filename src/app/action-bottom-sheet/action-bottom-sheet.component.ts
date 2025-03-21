@@ -14,12 +14,14 @@ export class ActionBottomSheetComponent {
   protected state = inject(AppStateService);
 
   play() {
-    const utterance = new SpeechSynthesisUtterance(this.state.text());
+    const utterance = new SpeechSynthesisUtterance(
+      this.state.speechRecognition.text(),
+    );
     utterance.lang = window.navigator.language;
     speechSynthesis.speak(utterance);
   }
 
   async share() {
-    await navigator.share({ text: this.state.text() });
+    await navigator.share({ text: this.state.speechRecognition.text() });
   }
 }

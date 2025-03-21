@@ -1,9 +1,7 @@
-@if (state.isRecording()) {
-  <mat-icon (click)="state.isRecording.set(false)" class="main-button"
-    >stop_circle</mat-icon
-  >
+@if (state.speechRecognition.isRecording()) {
+  <mat-icon (click)="stopRecording()" class="main-button">stop_circle</mat-icon>
 } @else {
-  <mat-icon (click)="state.isRecording.set(true)" class="main-button"
+  <mat-icon (click)="state.speechRecognition.start()" class="main-button"
     >mic</mat-icon
   >
 }
