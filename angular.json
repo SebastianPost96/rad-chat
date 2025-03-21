@@ -19,6 +19,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/rad-chat/",
             "outputPath": "dist/rad-chat",
             "index": "src/index.html",
             "browser": "src/main.ts",
