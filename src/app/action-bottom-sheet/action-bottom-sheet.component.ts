@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
-import { AppStateService } from '../app.state.service';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-action-bottom-sheet',
@@ -11,17 +11,15 @@ import { AppStateService } from '../app.state.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionBottomSheetComponent {
-  protected state = inject(AppStateService);
+  protected text: string = inject(MAT_BOTTOM_SHEET_DATA);
 
   play() {
-    const utterance = new SpeechSynthesisUtterance(
-      this.state.speechRecognition.text(),
-    );
+    const utterance = new SpeechSynthesisUtterance(this.text);
     utterance.lang = window.navigator.language;
     speechSynthesis.speak(utterance);
   }
 
   async share() {
-    await navigator.share({ text: this.state.speechRecognition.text() });
+    await navigator.share({ text: this.text });
   }
 }
