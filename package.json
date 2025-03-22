@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:rad-chat": "node dist/rad-chat/server/server.mjs",
+    "serve:ssr:rad-chat": "node dist/rad-chat/server/server.mjs"
   },
   "private": true,
   "dependencies": {
