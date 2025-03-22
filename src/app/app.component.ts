@@ -1,22 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ActionBottomSheetComponent } from './action-bottom-sheet/action-bottom-sheet.component';
-import { ContinuousSpeechRecognition } from './continuous-speech-recognition';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RecordingComponent } from './feature/recording/recording.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MatIcon],
+  imports: [RecordingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  protected speechRecognition = new ContinuousSpeechRecognition();
-  private _bottomSheet = inject(MatBottomSheet);
-
-  async stopRecording() {
-    const recordedText = await this.speechRecognition.stop();
-    this._bottomSheet.open(ActionBottomSheetComponent, { data: recordedText });
-  }
-}
+export class AppComponent {}

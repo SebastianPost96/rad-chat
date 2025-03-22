@@ -1,0 +1,7 @@
+<button class="main-button" mat-icon-button aria-label="Record button">
+  @if (speechRecognition.isRecording()) {
+    <mat-icon (click)="stopRecording()">stop_circle</mat-icon>
+  } @else {
+    <mat-icon (click)="speechRecognition.start()">mic</mat-icon>
+  }
+</button>

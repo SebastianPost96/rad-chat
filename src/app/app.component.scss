@@ -1,15 +1,3 @@
 :host {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-
-  .main-button {
-    --size: 75px;
-    width: var(--size);
-    height: var(--size);
-    font-size: var(--size);
-    color: var(--red50);
-    cursor: pointer;
-  }
+  display: contents;
 }
