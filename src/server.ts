@@ -20,8 +20,7 @@ const angularApp = new AngularNodeAppEngine();
  * Example Express Rest API endpoints can be defined here.
  */
 app.get('/api/rephrase', async (req, res) => {
-  const text = req.query['text'] as string;
-  const lang = req.query['lang'] as string;
+  const { text, lang } = req.query as Record<string, string>;
   if (!text || !lang) {
     res.status(400).send();
   }
@@ -29,12 +28,25 @@ app.get('/api/rephrase', async (req, res) => {
   const genAI = new GoogleGenerativeAI(env.googleApiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-  const result = await model.generateContent([
-    'The next prompt part will contain text was recorded by a person with Aphasia and may contain stuttering. If you detect any problems in the text, rephrase it to make more sense. Please respond in the language ' +
-      lang +
-      ' and ONLY respond with the rephrased sentence',
-    text,
-  ]);
+  const result = await model.generateContent({
+    contents: [
+      {
+        role: 'assistant',
+        parts: [
+          {
+            text: `The user prompt will contain Speech Recognition text was recorded by a person with Aphasia.`,
+          },
+          {
+            text: 'If you detect common speaking problems such as stuttering or out-of-place words, rephrase it to make more sense.',
+          },
+          {
+            text: `Respond in the language ${lang} and ONLY respond with the rephrased user prompt`,
+          },
+        ],
+      },
+      { role: 'user', parts: [{ text }] },
+    ],
+  });
   res.json(result.response.text());
 });
 
