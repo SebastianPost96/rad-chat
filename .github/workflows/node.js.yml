@@ -22,4 +22,4 @@ jobs:
         run: |
           npm install
           npm run write-env
-          npm run ng -- deploy --name="SebastianPost96" --email="sebastianpost@online.de" --no-silent
+          npm run ng -- deploy --name="SebastianPost96" --email="bastip@live.de" --no-silent
