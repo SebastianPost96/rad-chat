@@ -2,27 +2,15 @@ import { signal } from '@angular/core';
 import { firstValueFrom, Subject } from 'rxjs';
 
 export class ContinuousSpeechRecognition {
+  private _recognition = new webkitSpeechRecognition();
   private _onEnd$ = new Subject<void>();
   private _text = '';
   private _isRecording = signal(false);
-  private _recognition: SpeechRecognition;
 
   public isRecording = this._isRecording.asReadonly();
 
   constructor() {
-    this._recognition = new webkitSpeechRecognition();
-    this._recognition.lang = window.navigator.language;
-
-    this._recognition.onresult = (evt) => {
-      const result = evt.results[0][0].transcript;
-      this._text = this._text ? `${this._text}. ${result}` : result;
-    };
-    this._recognition.onend = () => {
-      this._onEnd$.next();
-      if (this._isRecording()) {
-        this._recognition.start();
-      }
-    };
+    this.configureSpeechRecognition();
   }
 
   /** Starts the speech recognition */
@@ -38,5 +26,19 @@ export class ContinuousSpeechRecognition {
     this._recognition.stop();
     await firstValueFrom(this._onEnd$); // wait for recognition to finalize
     return this._text;
+  }
+
+  private configureSpeechRecognition() {
+    this._recognition.lang = window.navigator.language;
+    this._recognition.onresult = (evt) => {
+      const result = evt.results[0][0].transcript;
+      this._text = this._text ? `${this._text}. ${result}` : result;
+    };
+    this._recognition.onend = () => {
+      this._onEnd$.next();
+      if (this._isRecording()) {
+        this._recognition.start();
+      }
+    };
   }
 }
