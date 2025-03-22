@@ -18,6 +18,11 @@ export class RecordingComponent {
 
   async stopRecording() {
     const recordedText = await this.speechRecognition.stop();
-    this._bottomSheet.open(ActionBottomSheetComponent, { data: recordedText });
+
+    if (recordedText) {
+      this._bottomSheet.open(ActionBottomSheetComponent, {
+        data: recordedText,
+      });
+    }
   }
 }
