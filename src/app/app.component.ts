@@ -8,4 +8,6 @@ import { RecordingComponent } from './feature/recording/recording.component';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {}
+export class AppComponent {
+  hasWindow = typeof window !== 'undefined';
+}
