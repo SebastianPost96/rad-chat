@@ -8,6 +8,7 @@ import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { env } from '../env';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -25,9 +26,7 @@ app.get('/api/rephrase', async (req, res) => {
     res.status(400).send();
   }
 
-  const genAI = new GoogleGenerativeAI(
-    'AIzaSyDeMaHseioJaONQUgpCG6tL9C6b0QSPrUk', // free public key
-  );
+  const genAI = new GoogleGenerativeAI(env.googleApiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
   const result = await model.generateContent([
