@@ -29,23 +29,10 @@ app.get('/api/rephrase', async (req, res) => {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
   const result = await model.generateContent({
-    contents: [
-      {
-        role: 'assistant',
-        parts: [
-          {
-            text: `The user prompt will contain Speech Recognition text was recorded by a person with Aphasia.`,
-          },
-          {
-            text: 'If you detect common speaking problems such as stuttering or out-of-place words, rephrase it to make more sense.',
-          },
-          {
-            text: `Respond in the language ${lang} and ONLY respond with the rephrased user prompt`,
-          },
-        ],
-      },
-      { role: 'user', parts: [{ text }] },
-    ],
+    systemInstruction: `The user prompt will contain Speech Recognition text was recorded by a person with Aphasia.\n
+            If you detect common speaking problems such as stuttering or out-of-place words, rephrase it to make more sense.\n
+            Respond in the language ${lang} and ONLY respond with the rephrased user prompt`,
+    contents: [{ role: 'user', parts: [{ text }] }],
   });
   res.json(result.response.text());
 });
