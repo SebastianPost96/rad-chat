@@ -5,17 +5,9 @@
   justify-content: center;
 
   .main-button {
-    --size: 75px;
-    height: auto;
-    width: auto;
-
+    scale: 3;
     mat-icon {
-      width: var(--size);
-      height: var(--size);
-      font-size: var(--size);
-      line-height: var(--size);
       color: var(--red50);
-      cursor: pointer;
     }
   }
 }

@@ -1,7 +1,19 @@
-<button class="main-button" mat-icon-button aria-label="Record button">
-  @if (speechRecognition.isRecording()) {
-    <mat-icon (click)="stopRecording()">stop_circle</mat-icon>
-  } @else {
-    <mat-icon (click)="speechRecognition.start()">mic</mat-icon>
-  }
-</button>
+@if (speechRecognition.isRecording()) {
+  <button
+    (click)="stopRecording()"
+    class="main-button"
+    mat-icon-button
+    aria-label="Stop button"
+  >
+    <mat-icon class="material-icons-outlined"> stop_circle </mat-icon>
+  </button>
+} @else {
+  <button
+    (click)="speechRecognition.start()"
+    class="main-button"
+    mat-icon-button
+    aria-label="Record button"
+  >
+    <mat-icon class="material-icons"> mic </mat-icon>
+  </button>
+}
