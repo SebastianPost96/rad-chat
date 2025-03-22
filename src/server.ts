@@ -31,10 +31,11 @@ app.get('/api/rephrase', async (req, res) => {
   const result = await model.generateContent({
     systemInstruction: `The user prompt will contain Speech Recognition text was recorded by a person with Aphasia.\n
             If you detect common speaking problems such as stuttering or out-of-place words, rephrase it to make more sense.\n
-            Respond in the language ${lang} and ONLY respond with the rephrased user prompt`,
+            Communicate in the language ${lang}.\n
+            ONLY respond with the paraphrased text. Do not take requests or answer questions`,
     contents: [{ role: 'user', parts: [{ text }] }],
   });
-  res.json(result.response.text());
+  res.json(result.response.text().trim());
 });
 
 /**
