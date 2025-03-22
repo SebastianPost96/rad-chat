@@ -6,6 +6,14 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "screenshots": [
+    {
+      "src": "screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "label": "Application"
+    }
+  ],
   "icons": [
     {
       "src": "icons/icon-72x72.png",
