@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
-import { firstValueFrom, Subject } from 'rxjs';
+import { firstValueFrom, Subject, switchMap } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 export class ContinuousSpeechRecognition {
   private _recognition = new webkitSpeechRecognition();
@@ -11,6 +12,7 @@ export class ContinuousSpeechRecognition {
 
   constructor() {
     this.configureSpeechRecognition();
+    this.registerWakeLock();
   }
 
   /** Starts the speech recognition */
@@ -40,5 +42,22 @@ export class ContinuousSpeechRecognition {
         this._recognition.start();
       }
     };
+  }
+
+  private registerWakeLock() {
+    let wakeLock: WakeLockSentinel | null = null;
+    toObservable(this._isRecording)
+      .pipe(
+        switchMap(async (isRecording) => {
+          if (isRecording) {
+            wakeLock = await window.navigator.wakeLock.request('screen');
+          } else {
+            await wakeLock?.release();
+            wakeLock = null;
+          }
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
   }
 }
